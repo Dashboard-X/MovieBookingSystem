@@ -1,0 +1,88 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
+-- --------------------------------------------------
+-- Date Created: 05/12/2012 03:02:37
+-- Generated from EDMX file: D:\AtulExample\MBS\MBSDAL\MBSModel.edmx
+-- --------------------------------------------------
+
+SET QUOTED_IDENTIFIER OFF;
+GO
+USE [MBS_Nishanth];
+GO
+IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
+GO
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- --------------------------------------------------
+
+IF OBJECT_ID(N'[dbo].[FK_Screen_Cinema]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Screen] DROP CONSTRAINT [FK_Screen_Cinema];
+GO
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- --------------------------------------------------
+
+IF OBJECT_ID(N'[dbo].[Cinema]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Cinema];
+GO
+IF OBJECT_ID(N'[dbo].[Screen]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Screen];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'Cinemas'
+CREATE TABLE [dbo].[Cinemas] (
+    [CinemaId] int  NOT NULL,
+    [Location] nvarchar(max)  NULL,
+    [Name] nvarchar(max)  NULL,
+    [NumberOfScreens] int  NULL,
+    [IsDeleted] nvarchar(10)  NULL
+);
+GO
+
+-- Creating table 'Screens'
+CREATE TABLE [dbo].[Screens] (
+    [CinemaId] int  NOT NULL,
+    [ScreenNumber] int  NOT NULL,
+    [NumberOfSeats] int  NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [CinemaId] in table 'Cinemas'
+ALTER TABLE [dbo].[Cinemas]
+ADD CONSTRAINT [PK_Cinemas]
+    PRIMARY KEY CLUSTERED ([CinemaId] ASC);
+GO
+
+-- Creating primary key on [CinemaId], [ScreenNumber] in table 'Screens'
+ALTER TABLE [dbo].[Screens]
+ADD CONSTRAINT [PK_Screens]
+    PRIMARY KEY CLUSTERED ([CinemaId], [ScreenNumber] ASC);
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- Creating foreign key on [CinemaId] in table 'Screens'
+ALTER TABLE [dbo].[Screens]
+ADD CONSTRAINT [FK_Screen_Cinema]
+    FOREIGN KEY ([CinemaId])
+    REFERENCES [dbo].[Cinemas]
+        ([CinemaId])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

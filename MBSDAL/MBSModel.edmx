@@ -1,0 +1,603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MBSModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="MBSModelStoreContainer">
+          <EntitySet Name="Booking" EntityType="MBSModel.Store.Booking" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Cinema" EntityType="MBSModel.Store.Cinema" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Food" EntityType="MBSModel.Store.Food" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FoodOrder" EntityType="MBSModel.Store.FoodOrder" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Movie" EntityType="MBSModel.Store.Movie" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MovieSchedule" EntityType="MBSModel.Store.MovieSchedule" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Screen" EntityType="MBSModel.Store.Screen" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ShowTime" EntityType="MBSModel.Store.ShowTime" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="MBSModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Booking_ShowTime" Association="MBSModel.Store.FK_Booking_ShowTime">
+            <End Role="ShowTime" EntitySet="ShowTime" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodOrder_Booking" Association="MBSModel.Store.FK_FoodOrder_Booking">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="FoodOrder" EntitySet="FoodOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieSchedule_Screen" Association="MBSModel.Store.FK_MovieSchedule_Screen">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="MovieSchedule" EntitySet="MovieSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieSchedule_Screen1" Association="MBSModel.Store.FK_MovieSchedule_Screen1">
+            <End Role="Screen" EntitySet="Screen" />
+            <End Role="MovieSchedule" EntitySet="MovieSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Screen_Cinema" Association="MBSModel.Store.FK_Screen_Cinema">
+            <End Role="Cinema" EntitySet="Cinema" />
+            <End Role="Screen" EntitySet="Screen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShowTime_MovieSchedule" Association="MBSModel.Store.FK_ShowTime_MovieSchedule">
+            <End Role="MovieSchedule" EntitySet="MovieSchedule" />
+            <End Role="ShowTime" EntitySet="ShowTime" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="int" Nullable="false" />
+          <Property Name="BookingDate" Type="datetime" />
+          <Property Name="Seatnumbers" Type="xml" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="RewardPointsGained" Type="int" />
+          <Property Name="ShowTimeID" Type="int" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="Cinema">
+          <Key>
+            <PropertyRef Name="CinemaID" />
+          </Key>
+          <Property Name="CinemaID" Type="int" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="20" />
+          <Property Name="CinemaName" Type="nvarchar" MaxLength="30" />
+          <Property Name="NumOfScreens" Type="int" />
+          <Property Name="IsDeleted" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="FoodID" />
+          </Key>
+          <Property Name="FoodID" Type="int" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="20" />
+          <Property Name="ImageURL" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Price" Type="money" />
+          <Property Name="IsDeleted" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="FoodOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="BookingID" Type="int" />
+          <Property Name="ItemsOrdered" Type="xml" />
+          <Property Name="Amount" Type="money" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="MovieID" Type="int" Nullable="false" />
+          <Property Name="MovieTitle" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="Genre" Type="nvarchar" MaxLength="20" />
+          <Property Name="Cast" Type="nvarchar" MaxLength="50" />
+          <Property Name="Rating" Type="float" />
+          <Property Name="ImageURL" Type="nvarchar" MaxLength="100" />
+          <Property Name="ReleaseDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="MovieSchedule">
+          <Key>
+            <PropertyRef Name="MovieScheduleID" />
+          </Key>
+          <Property Name="MovieScheduleID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="ShowStartTime" Type="datetime" />
+          <Property Name="ShowEndTime" Type="datetime" />
+          <Property Name="WeekDateFare" Type="money" />
+          <Property Name="WeekEndFare" Type="money" />
+          <Property Name="IsDeleted" Type="nvarchar" MaxLength="10" />
+          <Property Name="CinemaID" Type="int" />
+          <Property Name="ScreenNo" Type="int" />
+          <Property Name="MovieID" Type="int" />
+        </EntityType>
+        <EntityType Name="Screen">
+          <Key>
+            <PropertyRef Name="CinemaID" />
+            <PropertyRef Name="ScreenNo" />
+          </Key>
+          <Property Name="CinemaID" Type="int" Nullable="false" />
+          <Property Name="ScreenNo" Type="int" Nullable="false" />
+          <Property Name="NumOfSeats" Type="int" />
+          <Property Name="IsDeleted" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ShowTime">
+          <Key>
+            <PropertyRef Name="ShowID" />
+          </Key>
+          <Property Name="ShowID" Type="int" Nullable="false" />
+          <Property Name="Fare" Type="money" />
+          <Property Name="ShowDate" Type="date" />
+          <Property Name="SeatsAvailable" Type="xml" />
+          <Property Name="MovieScheduleID" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="nvarchar" MaxLength="10" />
+          <Property Name="Contact" Type="bigint" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="50" />
+          <Property Name="TotalRewardPoints" Type="int" />
+          <Property Name="Preferences" Type="nvarchar" MaxLength="20" />
+          <Property Name="UserNotified" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_Booking_ShowTime">
+          <End Role="ShowTime" Type="MBSModel.Store.ShowTime" Multiplicity="0..1" />
+          <End Role="Booking" Type="MBSModel.Store.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShowTime">
+              <PropertyRef Name="ShowID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="ShowTimeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodOrder_Booking">
+          <End Role="Booking" Type="MBSModel.Store.Booking" Multiplicity="0..1" />
+          <End Role="FoodOrder" Type="MBSModel.Store.FoodOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="FoodOrder">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieSchedule_Screen">
+          <End Role="Movie" Type="MBSModel.Store.Movie" Multiplicity="0..1" />
+          <End Role="MovieSchedule" Type="MBSModel.Store.MovieSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="MovieSchedule">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieSchedule_Screen1">
+          <End Role="Screen" Type="MBSModel.Store.Screen" Multiplicity="0..1" />
+          <End Role="MovieSchedule" Type="MBSModel.Store.MovieSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Screen">
+              <PropertyRef Name="CinemaID" />
+              <PropertyRef Name="ScreenNo" />
+            </Principal>
+            <Dependent Role="MovieSchedule">
+              <PropertyRef Name="CinemaID" />
+              <PropertyRef Name="ScreenNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Screen_Cinema">
+          <End Role="Cinema" Type="MBSModel.Store.Cinema" Multiplicity="1" />
+          <End Role="Screen" Type="MBSModel.Store.Screen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinema">
+              <PropertyRef Name="CinemaID" />
+            </Principal>
+            <Dependent Role="Screen">
+              <PropertyRef Name="CinemaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShowTime_MovieSchedule">
+          <End Role="MovieSchedule" Type="MBSModel.Store.MovieSchedule" Multiplicity="0..1" />
+          <End Role="ShowTime" Type="MBSModel.Store.ShowTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieSchedule">
+              <PropertyRef Name="MovieScheduleID" />
+            </Principal>
+            <Dependent Role="ShowTime">
+              <PropertyRef Name="MovieScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MBSModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MBS_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bookings" EntityType="MBSModel.Booking" />
+          <EntitySet Name="Cinemas" EntityType="MBSModel.Cinema" />
+          <EntitySet Name="Foods" EntityType="MBSModel.Food" />
+          <EntitySet Name="FoodOrders" EntityType="MBSModel.FoodOrder" />
+          <EntitySet Name="Movies" EntityType="MBSModel.Movie" />
+          <EntitySet Name="MovieSchedules" EntityType="MBSModel.MovieSchedule" />
+          <EntitySet Name="Screens" EntityType="MBSModel.Screen" />
+          <EntitySet Name="ShowTimes" EntityType="MBSModel.ShowTime" />
+          <EntitySet Name="Users" EntityType="MBSModel.User" />
+          <AssociationSet Name="FK_Booking_ShowTime" Association="MBSModel.FK_Booking_ShowTime">
+            <End Role="ShowTime" EntitySet="ShowTimes" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodOrder_Booking" Association="MBSModel.FK_FoodOrder_Booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="FoodOrder" EntitySet="FoodOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Screen_Cinema" Association="MBSModel.FK_Screen_Cinema">
+            <End Role="Cinema" EntitySet="Cinemas" />
+            <End Role="Screen" EntitySet="Screens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieSchedule_Screen" Association="MBSModel.FK_MovieSchedule_Screen">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="MovieSchedule" EntitySet="MovieSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieSchedule_Screen1" Association="MBSModel.FK_MovieSchedule_Screen1">
+            <End Role="Screen" EntitySet="Screens" />
+            <End Role="MovieSchedule" EntitySet="MovieSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShowTime_MovieSchedule" Association="MBSModel.FK_ShowTime_MovieSchedule">
+            <End Role="MovieSchedule" EntitySet="MovieSchedules" />
+            <End Role="ShowTime" EntitySet="ShowTimes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="Int32" Nullable="false" />
+          <Property Name="BookingDate" Type="DateTime" />
+          <Property Name="Seatnumbers" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RewardPointsGained" Type="Int32" />
+          <Property Name="ShowTimeID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="ShowTime" Relationship="MBSModel.FK_Booking_ShowTime" FromRole="Booking" ToRole="ShowTime" />
+          <NavigationProperty Name="FoodOrders" Relationship="MBSModel.FK_FoodOrder_Booking" FromRole="Booking" ToRole="FoodOrder" />
+        </EntityType>
+        <EntityType Name="Cinema">
+          <Key>
+            <PropertyRef Name="CinemaID" />
+          </Key>
+          <Property Name="CinemaID" Type="Int32" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="CinemaName" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="NumOfScreens" Type="Int32" />
+          <Property Name="IsDeleted" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Screens" Relationship="MBSModel.FK_Screen_Cinema" FromRole="Cinema" ToRole="Screen" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="FoodID" />
+          </Key>
+          <Property Name="FoodID" Type="Int32" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="ImageURL" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsDeleted" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="FoodOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="BookingID" Type="Int32" />
+          <Property Name="ItemsOrdered" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Booking" Relationship="MBSModel.FK_FoodOrder_Booking" FromRole="FoodOrder" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="MovieID" />
+          </Key>
+          <Property Name="MovieID" Type="Int32" Nullable="false" />
+          <Property Name="MovieTitle" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="Genre" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Cast" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Rating" Type="Double" />
+          <Property Name="ImageURL" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="ReleaseDate" Type="DateTime" />
+          <Property Name="IsDeleted" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="MovieSchedules" Relationship="MBSModel.FK_MovieSchedule_Screen" FromRole="Movie" ToRole="MovieSchedule" />
+        </EntityType>
+        <EntityType Name="MovieSchedule">
+          <Key>
+            <PropertyRef Name="MovieScheduleID" />
+          </Key>
+          <Property Name="MovieScheduleID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" />
+          <Property Name="EndDate" Type="DateTime" />
+          <Property Name="ShowStartTime" Type="DateTime" />
+          <Property Name="ShowEndTime" Type="DateTime" />
+          <Property Name="WeekDateFare" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="WeekEndFare" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsDeleted" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="CinemaID" Type="Int32" />
+          <Property Name="ScreenNo" Type="Int32" />
+          <Property Name="MovieID" Type="Int32" />
+          <NavigationProperty Name="Movie" Relationship="MBSModel.FK_MovieSchedule_Screen" FromRole="MovieSchedule" ToRole="Movie" />
+          <NavigationProperty Name="Screen" Relationship="MBSModel.FK_MovieSchedule_Screen1" FromRole="MovieSchedule" ToRole="Screen" />
+          <NavigationProperty Name="ShowTimes" Relationship="MBSModel.FK_ShowTime_MovieSchedule" FromRole="MovieSchedule" ToRole="ShowTime" />
+        </EntityType>
+        <EntityType Name="Screen">
+          <Key>
+            <PropertyRef Name="CinemaID" />
+            <PropertyRef Name="ScreenNo" />
+          </Key>
+          <Property Name="CinemaID" Type="Int32" Nullable="false" />
+          <Property Name="ScreenNo" Type="Int32" Nullable="false" />
+          <Property Name="NumOfSeats" Type="Int32" />
+          <Property Name="IsDeleted" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Cinema" Relationship="MBSModel.FK_Screen_Cinema" FromRole="Screen" ToRole="Cinema" />
+          <NavigationProperty Name="MovieSchedules" Relationship="MBSModel.FK_MovieSchedule_Screen1" FromRole="Screen" ToRole="MovieSchedule" />
+        </EntityType>
+        <EntityType Name="ShowTime">
+          <Key>
+            <PropertyRef Name="ShowID" />
+          </Key>
+          <Property Name="ShowID" Type="Int32" Nullable="false" />
+          <Property Name="Fare" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ShowDate" Type="DateTime" />
+          <Property Name="SeatsAvailable" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="MovieScheduleID" Type="Int32" />
+          <NavigationProperty Name="Bookings" Relationship="MBSModel.FK_Booking_ShowTime" FromRole="ShowTime" ToRole="Booking" />
+          <NavigationProperty Name="MovieSchedule" Relationship="MBSModel.FK_ShowTime_MovieSchedule" FromRole="ShowTime" ToRole="MovieSchedule" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="IsDeleted" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="Contact" Type="Int64" />
+          <Property Name="EmailID" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TotalRewardPoints" Type="Int32" />
+          <Property Name="Preferences" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="UserNotified" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Booking_ShowTime">
+          <End Role="ShowTime" Type="MBSModel.ShowTime" Multiplicity="0..1" />
+          <End Role="Booking" Type="MBSModel.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShowTime">
+              <PropertyRef Name="ShowID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="ShowTimeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodOrder_Booking">
+          <End Role="Booking" Type="MBSModel.Booking" Multiplicity="0..1" />
+          <End Role="FoodOrder" Type="MBSModel.FoodOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="FoodOrder">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Screen_Cinema">
+          <End Role="Cinema" Type="MBSModel.Cinema" Multiplicity="1" />
+          <End Role="Screen" Type="MBSModel.Screen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cinema">
+              <PropertyRef Name="CinemaID" />
+            </Principal>
+            <Dependent Role="Screen">
+              <PropertyRef Name="CinemaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieSchedule_Screen">
+          <End Role="Movie" Type="MBSModel.Movie" Multiplicity="0..1" />
+          <End Role="MovieSchedule" Type="MBSModel.MovieSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="MovieID" />
+            </Principal>
+            <Dependent Role="MovieSchedule">
+              <PropertyRef Name="MovieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieSchedule_Screen1">
+          <End Role="Screen" Type="MBSModel.Screen" Multiplicity="0..1" />
+          <End Role="MovieSchedule" Type="MBSModel.MovieSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Screen">
+              <PropertyRef Name="CinemaID" />
+              <PropertyRef Name="ScreenNo" />
+            </Principal>
+            <Dependent Role="MovieSchedule">
+              <PropertyRef Name="CinemaID" />
+              <PropertyRef Name="ScreenNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShowTime_MovieSchedule">
+          <End Role="MovieSchedule" Type="MBSModel.MovieSchedule" Multiplicity="0..1" />
+          <End Role="ShowTime" Type="MBSModel.ShowTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieSchedule">
+              <PropertyRef Name="MovieScheduleID" />
+            </Principal>
+            <Dependent Role="ShowTime">
+              <PropertyRef Name="MovieScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MBSModelStoreContainer" CdmEntityContainer="MBS_Entities">
+          <EntitySetMapping Name="Bookings"><EntityTypeMapping TypeName="MBSModel.Booking"><MappingFragment StoreEntitySet="Booking">
+            <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+            <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+            <ScalarProperty Name="Seatnumbers" ColumnName="Seatnumbers" />
+            <ScalarProperty Name="Amount" ColumnName="Amount" />
+            <ScalarProperty Name="RewardPointsGained" ColumnName="RewardPointsGained" />
+            <ScalarProperty Name="ShowTimeID" ColumnName="ShowTimeID" />
+            <ScalarProperty Name="UserID" ColumnName="UserID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Cinemas"><EntityTypeMapping TypeName="MBSModel.Cinema"><MappingFragment StoreEntitySet="Cinema">
+            <ScalarProperty Name="CinemaID" ColumnName="CinemaID" />
+            <ScalarProperty Name="Location" ColumnName="Location" />
+            <ScalarProperty Name="CinemaName" ColumnName="CinemaName" />
+            <ScalarProperty Name="NumOfScreens" ColumnName="NumOfScreens" />
+            <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Foods"><EntityTypeMapping TypeName="MBSModel.Food"><MappingFragment StoreEntitySet="Food">
+            <ScalarProperty Name="FoodID" ColumnName="FoodID" />
+            <ScalarProperty Name="Category" ColumnName="Category" />
+            <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Price" ColumnName="Price" />
+            <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="FoodOrders"><EntityTypeMapping TypeName="MBSModel.FoodOrder"><MappingFragment StoreEntitySet="FoodOrder">
+            <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+            <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+            <ScalarProperty Name="ItemsOrdered" ColumnName="ItemsOrdered" />
+            <ScalarProperty Name="Amount" ColumnName="Amount" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Movies"><EntityTypeMapping TypeName="MBSModel.Movie"><MappingFragment StoreEntitySet="Movie">
+            <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+            <ScalarProperty Name="MovieTitle" ColumnName="MovieTitle" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="Duration" ColumnName="Duration" />
+            <ScalarProperty Name="Genre" ColumnName="Genre" />
+            <ScalarProperty Name="Cast" ColumnName="Cast" />
+            <ScalarProperty Name="Rating" ColumnName="Rating" />
+            <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+            <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+            <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MovieSchedules"><EntityTypeMapping TypeName="MBSModel.MovieSchedule"><MappingFragment StoreEntitySet="MovieSchedule">
+            <ScalarProperty Name="MovieScheduleID" ColumnName="MovieScheduleID" />
+            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+            <ScalarProperty Name="ShowStartTime" ColumnName="ShowStartTime" />
+            <ScalarProperty Name="ShowEndTime" ColumnName="ShowEndTime" />
+            <ScalarProperty Name="WeekDateFare" ColumnName="WeekDateFare" />
+            <ScalarProperty Name="WeekEndFare" ColumnName="WeekEndFare" />
+            <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+            <ScalarProperty Name="CinemaID" ColumnName="CinemaID" />
+            <ScalarProperty Name="ScreenNo" ColumnName="ScreenNo" />
+            <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Screens"><EntityTypeMapping TypeName="MBSModel.Screen"><MappingFragment StoreEntitySet="Screen">
+            <ScalarProperty Name="CinemaID" ColumnName="CinemaID" />
+            <ScalarProperty Name="ScreenNo" ColumnName="ScreenNo" />
+            <ScalarProperty Name="NumOfSeats" ColumnName="NumOfSeats" />
+            <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ShowTimes"><EntityTypeMapping TypeName="MBSModel.ShowTime"><MappingFragment StoreEntitySet="ShowTime">
+            <ScalarProperty Name="ShowID" ColumnName="ShowID" />
+            <ScalarProperty Name="Fare" ColumnName="Fare" />
+            <ScalarProperty Name="ShowDate" ColumnName="ShowDate" />
+            <ScalarProperty Name="SeatsAvailable" ColumnName="SeatsAvailable" />
+            <ScalarProperty Name="MovieScheduleID" ColumnName="MovieScheduleID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="MBSModel.User"><MappingFragment StoreEntitySet="User">
+            <ScalarProperty Name="UserID" ColumnName="UserID" />
+            <ScalarProperty Name="Role" ColumnName="Role" />
+            <ScalarProperty Name="UserName" ColumnName="UserName" />
+            <ScalarProperty Name="Password" ColumnName="Password" />
+            <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+            <ScalarProperty Name="Contact" ColumnName="Contact" />
+            <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+            <ScalarProperty Name="TotalRewardPoints" ColumnName="TotalRewardPoints" />
+            <ScalarProperty Name="Preferences" ColumnName="Preferences" />
+            <ScalarProperty Name="UserNotified" ColumnName="UserNotified" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MBSModel">
+        <EntityTypeShape EntityType="MBSModel.Booking" Width="1.5" PointX="9.75" PointY="1.5" Height="2.7494921874999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBSModel.Cinema" Width="1.5" PointX="0.75" PointY="1.75" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBSModel.Food" Width="1.5" PointX="5.75" PointY="5.75" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBSModel.FoodOrder" Width="1.5" PointX="12" PointY="1.875" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBSModel.Movie" Width="1.5" PointX="3" PointY="5.25" Height="3.1340950520833326" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBSModel.MovieSchedule" Width="1.5" PointX="5.25" PointY="1" Height="3.7109993489583331" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBSModel.Screen" Width="1.5" PointX="3" PointY="1.75" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBSModel.ShowTime" Width="1.5" PointX="7.5" PointY="1.625" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBSModel.User" Width="1.5" PointX="7.75" PointY="5.75" Height="2.9417936197916674" IsExpanded="true" />
+        <AssociationConnector Association="MBSModel.FK_Booking_ShowTime" ManuallyRouted="false">
+          <ConnectorPoint PointX="9" PointY="2.8074446614583337" />
+          <ConnectorPoint PointX="9.75" PointY="2.8074446614583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="MBSModel.FK_FoodOrder_Booking" ManuallyRouted="false">
+          <ConnectorPoint PointX="11.25" PointY="2.8651432291666667" />
+          <ConnectorPoint PointX="12" PointY="2.8651432291666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="MBSModel.FK_Screen_Cinema" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.8362939453125" />
+          <ConnectorPoint PointX="3" PointY="2.8362939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="MBSModel.FK_MovieSchedule_Screen" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="5.46875" />
+          <ConnectorPoint PointX="5.46875" PointY="5.46875" />
+          <ConnectorPoint PointX="5.46875" PointY="4.7109993489583335" />
+        </AssociationConnector>
+        <AssociationConnector Association="MBSModel.FK_MovieSchedule_Screen1" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="2.8362939453125" />
+          <ConnectorPoint PointX="5.25" PointY="2.8362939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="MBSModel.FK_ShowTime_MovieSchedule" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="2.8074446614583337" />
+          <ConnectorPoint PointX="7.5" PointY="2.8074446614583337" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
